@@ -13,6 +13,7 @@ public class TreeNode {
     public TreeNode(String name, int w) {
         label = name;
         weight = w;
+        totalWeight = weight;
     }
 
     public void addSon(TreeNode... t) {
