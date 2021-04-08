@@ -1,5 +1,6 @@
 package algo77;
 
+import algo06.FDW;
 import util.TreeNode;
 
 public class Main {
@@ -23,8 +24,11 @@ public class Main {
         TreeNode h = new TreeNode("h",2);
         a.addSon(b,c,f,g,h);
         c.addSon(d,e);
-        Algo77 algo = new Algo77(a, 5);
-        algo.dfs(algo.root);
+        FDW fd = new FDW(a, 5);
+        fd.getPartition();
+       // List<Cell> r = fd.getPartition();
+        //Algo77 algo = new Algo77(a, 5);
+        //algo.dfs(algo.root);
     }
 
 }

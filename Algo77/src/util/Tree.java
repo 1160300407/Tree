@@ -7,6 +7,10 @@ public class Tree {
     TreeNode root;
 
     List<TreeNode> l;
+
+    public Tree(TreeNode u) {
+        root = u;
+    }
     private void dfs(TreeNode u) {
         //if (u.sons.size() == 0) {l.add(u);return;}
         for (int i = 0; i < u.sons.size(); i++) {
