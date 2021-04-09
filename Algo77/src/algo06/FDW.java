@@ -10,7 +10,7 @@ class Cell {
     int card;
     int rootweight;
     int[] next;
-
+    List<TreeNode> nearlyopt;
     public Cell() {
         next = new int[2];
     }
@@ -70,7 +70,7 @@ public class FDW {
 
         for (int j = 1; j <= n; j++) {
             for (int s = root.weight; s <= K; s++) {
-                int si = s - c.get(j-1).weight;//c: 0..n-1
+                int si = s + c.get(j-1).weight;//c: 0..n-1
                 Cell P = new Cell();
                 if (si <= K && si >= 0)
                     P.copy(d[si].cl[j - 1]);
@@ -81,7 +81,7 @@ public class FDW {
                     if (w <= K) {
                         int crd = d[s].cl[j - m - 1].card + 1;
                         int rw = d[s].cl[j - m - 1].rootweight;
-                        if (crd < P.card && (crd == P.card && rw < P.rootweight)) {
+                        if (crd < P.card || (crd == P.card && rw < P.rootweight)) {
                             P.begin = c.get(j - m - 1);
                             P.end = c.get(j - 1);
                             P.card = crd;
@@ -102,9 +102,7 @@ public class FDW {
         int i = root.weight, j = root.sons.size();
         while (i != 0 || j != 0) {
             result.add(d[i].cl[j]);
-            System.out.println(i+" "+j);
-            //System.out.println(d[i].cl[j].begin.label+"-"+d[i].cl[j].end.label+":"+d[i].cl[j].card+" rw:"+d[i].cl[j].rootweight);
-            System.out.println(d[i].cl[j].card);
+            System.out.println(d[i].cl[j].begin.label+"-"+d[i].cl[j].end.label+":"+d[i].cl[j].card+" rw:"+d[i].cl[j].rootweight);
             int tmp_i = d[i].cl[j].next[0];
             int tmp_j = d[i].cl[j].next[1];
             i = tmp_i;

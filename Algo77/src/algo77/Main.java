@@ -16,14 +16,14 @@ public class Main {
 //        c.addSon(d,e);
         TreeNode a = new TreeNode("a",3);
         TreeNode b = new TreeNode("b",2);
-        TreeNode c = new TreeNode("c",1);
+        TreeNode c = new TreeNode("c",5);
         TreeNode d = new TreeNode("d",2);
         TreeNode e = new TreeNode("e",2);
         TreeNode f = new TreeNode("f",1);
         TreeNode g = new TreeNode("g",1);
         TreeNode h = new TreeNode("h",2);
         a.addSon(b,c,f,g,h);
-        c.addSon(d,e);
+        //c.addSon(d,e);
         FDW fd = new FDW(a, 5);
         fd.getPartition();
        // List<Cell> r = fd.getPartition();
