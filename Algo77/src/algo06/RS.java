@@ -15,28 +15,57 @@ public class RS {
 
     public RS(TreeNode root, int k) {
         tree = new Tree(root);
-        tree.postOrder();
+        tree.postOrder();//calc totalWeight
         K = k;
         result = new ArrayList<>();
         part = new ArrayList<>();
 
-        dfs(null,root);
+        dfs(root);
         if (part.size() != 0) result.add(part);
     }
 
     public void dfs(TreeNode u) {
-        if (partsum + u.weight <= K && (father == null || father.index == result.size())) {//connected
-            u.index = result.size();
-            part.add(u);
-            partsum += u.weight;
-            for (int i = 0; i < u.sons.size(); i++)
-                dfs(u, u.sons.get(i));
-        } else {//either current part is full or u isn't connected with <part>
-            // (assert u is connected with <part> iff u's father is part(0))
-            result.add(part);
-            part = new ArrayList<>();
-            partsum = 0;
+        int n = u.sons.size();
+        for (int i = n - 1; i >= 0; i--) {
+            if (u.totalWeight <= K) { // subtree's weight less than K, return
+                if (partsum != 0) {
+                    partsum = 0;
+                    result.add(part);
+                    part = new ArrayList<>();
+                }
+                partsum = u.totalWeight;
+                part.add(u);
+                for (int j = 0; j <= i; j++)
+                    part.add(u.sons.get(j));
+                result.add(part);
+                part = new ArrayList<>();
+                u.totalWeight = 0;
+                return;
+            }
+            if (partsum + u.sons.get(i).totalWeight <= K) {
+                part.add(u.sons.get(i));
+                partsum += u.sons.get(i).totalWeight;
+                u.totalWeight -= u.sons.get(i).totalWeight;
+            } else {
+                if (partsum != 0) {
+                    partsum = 0;
+                    result.add(part);
+                    part = new ArrayList<>();
+                }
+                dfs(u.sons.get(i));
+            }
         }
     }
-}
+
+    public String getPartition() {
+        StringBuilder ans = new StringBuilder();
+        ans.append(String.valueOf(result.size()));
+        ans.append("\n");
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result.get(i).size(); j++)
+                ans.append(result.get(i).get(j).label +" ");
+            ans.append("\n");
+        }
+        return ans.toString();
+    }
 }

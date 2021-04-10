@@ -44,11 +44,6 @@ public class FDW {
         root = u;
         List<TreeNode> c = root.sons;
 
-//
-//         for (int i = 0; i < c.size(); i++)
-//            System.out.println(c.get(i).label);
-//
-
         int n = c.size();
         d = new CellList[K + 1];
         for (int i = 0; i <= K; i++)
