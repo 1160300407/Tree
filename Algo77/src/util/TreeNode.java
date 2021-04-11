@@ -10,6 +10,7 @@ public class TreeNode {
     public String label;
     public int index;
     public final List<TreeNode> sons = new ArrayList<>();
+    public TreeNode sibling;
     public TreeNode(String name, int w) {
         label = name;
         weight = w;
