@@ -28,14 +28,16 @@ public class PUREDFS {
             u.index = result.size();
             part.add(u);
             partsum += u.weight;
-            for (int i = 0; i < u.sons.size(); i++)
-                dfs(u, u.sons.get(i));
         } else {//either current part is full or u isn't connected with <part>
                 // (assert u is connected with <part> iff u's father is part(0))
             result.add(part);
             part = new ArrayList<>();
-            partsum = 0;
+            part.add(u);
+            u.index = result.size();
+            partsum = u.weight;
         }
+        for (int i = 0; i < u.sons.size(); i++)
+            dfs(u, u.sons.get(i));
     }
 
     public String getPartition() {

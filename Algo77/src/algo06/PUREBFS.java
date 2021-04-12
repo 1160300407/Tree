@@ -41,7 +41,9 @@ public class PUREBFS {
                 } else {
                     result.add(part);
                     part = new ArrayList<>();
-                    partsum = 0;
+                    part.add(v);
+                    partsum = v.weight;
+                    lastFather = u;
                 }
             }
 

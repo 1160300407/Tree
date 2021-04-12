@@ -12,9 +12,11 @@ public class GHDW {
     Tree t;
     CellList[][] D;
     List<TreeNode> nodes;
+    TreeNode root;
 
     public GHDW(int _k, TreeNode root) {
         K = _k;
+        this.root = root;
         t = new Tree(root);
         nodes = t.postOrder();
         D = new CellList[nodes.size()][K + 1];
@@ -25,7 +27,7 @@ public class GHDW {
             List<TreeNode> c = u.sons;
             int n = c.size();
             for (int i = 0; i <= K; i++)
-                    D[v][i] = new CellList(n);
+                    D[v][i] = new CellList(n+1);
             for (int i = 0; i <= K; i++)
                 for (int j = 0; j <= n; j++)
                     D[v][i].cl[j] = new Cell();
@@ -72,17 +74,33 @@ public class GHDW {
         }
     }
 
-    public List<Cell> getPartition() {
+    public void getPartition() {
         List<Cell> result = new ArrayList<>();
-//        int i = root.weight, j = root.sons.size();
-//        while (i != 0 || j != 0) {
+        int v = root.index;
+        int i = nodes.get(v).weight, j = nodes.get(v).sons.size();
+       /* if (D[v][i].cl[j].begin == null) {
+            System.out.println("whole subtree of "+nodes.get(v).label);
+            return;
+        }*/
+        while ((i != 0 || j != 0)) {
+//            if (D[v][i].cl[j].begin.label.equals(D[v][i].cl[j].end.label)) {
+//                getPartition(D[v][i].cl[j].begin.index);
+//            }
+            if (D[v][i].cl[j].begin != null)
+                System.out.println(D[v][i].cl[j].begin.label+"-"+D[v][i].cl[j].end.label+":"+D[v][i].cl[j].card+" rw:"+D[v][i].cl[j].rootweight);
+            else System.out.println(nodes.get(v).label);
+            int tmp_i = D[v][i].cl[j].next[0];
+            int tmp_j = D[v][i].cl[j].next[1];
+            i = tmp_i;
+            j = tmp_j;
+        }
 //            result.add(d[i][j]);
 //            int tmp_i = d[i][j].next[0];
 //            int tmp_j = d[i][j].next[1];
 //            i = tmp_i;
 //            j = tmp_j;
 //        }
-        return result;
+//        return result;
     }
 
 

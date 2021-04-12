@@ -30,6 +30,7 @@ public class Tree {
 
     private void binaryDFS(TreeNode u) {
         int sum = 0;
+        u.totalWeight = u.weight;
         if (u.sons.size() > 0) {
             binaryDFS(u.sons.get(0));
             sum += u.sons.get(0).totalWeight;
@@ -39,7 +40,7 @@ public class Tree {
             binaryDFS(u.sibling);
             sum += u.sibling.totalWeight;
         }
-        u.totalWeight = sum;
+        u.totalWeight += sum;
     }
 
     public void toBinary() {
@@ -58,5 +59,6 @@ public class Tree {
                 }
             }
         }
+        binaryDFS(root);
     }
 }

@@ -55,11 +55,18 @@ public class EKM {
         if (partsum + u.totalWeight <= K) {
             partsum += u.totalWeight;
             bfsAddPart(u);
+            //partsum = 0;
             return;
-        } else if (partsum != 0) {//partsum + u.totalWeight > K, make partsum a new part.
-            result.add(part);
-            partsum = 0;
-            part = new ArrayList<>();
+        } else if (partsum != 0 || u.totalWeight <= K) {//partsum + u.totalWeight > K, make partsum a new part.
+            if (partsum != 0) {
+                result.add(part);
+                partsum = 0;
+                part = new ArrayList<>();
+            }
+            if (u.totalWeight <= K) {
+                partsum = u.totalWeight;
+                bfsAddPart(u);
+            }
         } else {//u.totalWeight > K, no way that both paths is null.
             do {
                 int sonsWeight = 0;
@@ -75,13 +82,14 @@ public class EKM {
                     dfs(u.sibling);
                     u.totalWeight += u.sibling.totalWeight;
                 }
-            } while (u.totalWeight <= K);
+            } while (u.totalWeight > K);
 
-            if (u.totalWeight <= K) {
-                part = new ArrayList<>();
+            dfs(u);
+            /*if (partsum + u.totalWeight <= K) {
+                //part = new ArrayList<>();
+                partsum += u.totalWeight;
                 bfsAddPart(u);
-                partsum = u.totalWeight;
-            }
+            } else */
         }
 
     }

@@ -36,7 +36,7 @@ public class DHW {
 
     };
 
-    public DHW(int _k, TreeNode root) {
+    public DHW(TreeNode root, int _k) {
         K = _k;
         t = new Tree(root);
         nodes = t.postOrder();
@@ -108,7 +108,7 @@ public class DHW {
         }
     }
 
-    public List<Cell> getPartition() {
+    public void getPartition() {
         List<Cell> result = new ArrayList<>();
 //        int i = root.weight, j = root.sons.size();
 //        while (i != 0 || j != 0) {
@@ -118,6 +118,6 @@ public class DHW {
 //            i = tmp_i;
 //            j = tmp_j;
 //        }
-        return result;
+       // return result;
     }
 }
