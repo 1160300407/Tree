@@ -34,6 +34,7 @@ public class EKM {
         q.add(u);
         while (!q.isEmpty()) {
             TreeNode t = q.poll();
+            t.totalWeight = 0;
             part.add(t);
 
             if (t.sons.size() > 0 && t.sons.get(0).totalWeight != 0) {
@@ -47,45 +48,42 @@ public class EKM {
 
     public void dfs(TreeNode u) {
         int n = u.sons.size();
-        if (u.totalWeight <= K) {
+        u.totalWeight = u.weight;
+        if (u.sibling != null) u.totalWeight += u.sibling.totalWeight;
+        if (u.sons.size() > 0) u.totalWeight += u.sons.get(0).totalWeight;
+
+        if (partsum + u.totalWeight <= K) {
+            partsum += u.totalWeight;
             bfsAddPart(u);
+            return;
+        } else if (partsum != 0) {//partsum + u.totalWeight > K, make partsum a new part.
             result.add(part);
             partsum = 0;
             part = new ArrayList<>();
-            u.totalWeight = 0;
         } else {//u.totalWeight > K, no way that both paths is null.
-            int sonsWeight = 0;
-            if (u.sons.size() > 0) sonsWeight = u.sons.get(0).totalWeight;
-            int sibWeight = 0;
-            if (u.sibling.totalWeight > 0) sibWeight = u.sibling.totalWeight;
+            do {
+                int sonsWeight = 0;
+                if (u.sons.size() > 0) sonsWeight = u.sons.get(0).totalWeight;
+                int sibWeight = 0;
+                if (u.sibling != null) sibWeight = u.sibling.totalWeight;
 
-            if (sonsWeight > sibWeight) {
-                dfs(u.sons.get(0));
-            } else {
-                dfs(u.sibling);
+                u.totalWeight -= Integer.max(sonsWeight, sibWeight);//update u.totalWeight
+                if (sonsWeight > sibWeight) {
+                    dfs(u.sons.get(0));
+                    u.totalWeight += u.sons.get(0).totalWeight;
+                } else {
+                    dfs(u.sibling);
+                    u.totalWeight += u.sibling.totalWeight;
+                }
+            } while (u.totalWeight <= K);
+
+            if (u.totalWeight <= K) {
+                part = new ArrayList<>();
+                bfsAddPart(u);
+                partsum = u.totalWeight;
             }
-
-            if (u.totalWeight )
-
         }
 
-
-            PriorityQueue<TreeNode> q = new PriorityQueue<>(cmp);
-            for (TreeNode t : u.sons) q.add(t);
-            while (!q.isEmpty() && u.totalWeight > K) {
-                TreeNode t = q.poll();
-                dfs(t);
-                u.totalWeight -= t.totalWeight;
-            }
-            part.add(u);
-            while (!q.isEmpty()) {
-                TreeNode t = q.poll();
-                part.add(t);
-            }
-            result.add(part);
-            partsum = 0;
-            part = new ArrayList<>();
-        }
     }
 
     public String getPartition() {
@@ -94,7 +92,7 @@ public class EKM {
         ans.append("\n");
         for (int i = 0; i < result.size(); i++) {
             for (int j = 0; j < result.get(i).size(); j++)
-                ans.append(result.get(i).get(j).label +" ");
+                ans.append(result.get(i).get(j).label + " ");
             ans.append("\n");
         }
         return ans.toString();
