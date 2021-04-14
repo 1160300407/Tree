@@ -9,7 +9,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,18 +23,25 @@ class SigmodRecord {
      List<Issue> issues;
      public String toString() {
          StringBuilder sb = new StringBuilder();
-         sb.append("issues.size() = " + this.issues.size());
+         sb.append("issues.size() = " + this.issues.size());sb.append("\n");
          for (int i = 0; i < this.issues.size(); i++) {
-             sb.append("issue " + i + ":");
-             sb.append("  volume = " + this.issues.get(i).volume);
-             sb.append("  number = " + this.issues.get(i).number);
-             sb.append("  article size() = " + this.issues.get(i).articles.size());
+             sb.append("issue " + i + ":");sb.append("\n");
+             sb.append("  volume = " + this.issues.get(i).volume);sb.append("\n");
+             sb.append("  number = " + this.issues.get(i).number);sb.append("\n");
+             sb.append("  article size() = " + this.issues.get(i).articles.size());sb.append("\n");
              List<Article> arts = this.issues.get(i).articles;
              for (int j = 0; j < arts.size(); j++) {
-                 sb.append("  art "+j+":");
-
+                 sb.append("  article "+j+":"); sb.append("\n");
+                 sb.append("    title = "+arts.get(j).title);sb.append("\n");
+                 sb.append("    initPage-endPage = "+arts.get(j).initPage+"-"+arts.get(j).endPage);sb.append("\n");
+                 //arts.get(j).authors.toArray().toString()
+                 for (int k = 0; k < arts.get(j).authors.size(); k++) {
+                     sb.append("    author0"+k+":"+arts.get(j).authors.get(k));sb.append("\n");
+                 }
+                        // sb.append(String.join(" ", (CharSequence) arts.get(j).authors.toArray().toString()));sb.append("\n");
              }
          }
+         return sb.toString();
      }
 }
 
@@ -46,8 +53,8 @@ class Issue {
 
 class Article {
      String title;
-     int initPage;
-     int endPage;
+     String initPage;
+     String endPage;
      List<String> authors;
 }
 
@@ -88,17 +95,17 @@ public class DomParseService {
                             for (int t = 0; t < articleChildNodelist.getLength(); t++) {
                                 if(articleChildNodelist.item(t).getNodeType() == Node.ELEMENT_NODE) {
                                     if("title".equals(articleChildNodelist.item(t).getNodeName())) {
-                                        article.title = issueChildNodelist.item(t).getFirstChild().getNodeValue();
+                                        article.title = articleChildNodelist.item(t).getFirstChild().getNodeValue();
                                     } else if ("initPage".equals(articleChildNodelist.item(t).getNodeName())) {
-                                        article.initPage = Integer.parseInt(issueChildNodelist.item(t).getFirstChild().getNodeValue());
+                                        article.initPage = articleChildNodelist.item(t).getFirstChild().getNodeValue();
                                     } else if ("endPage".equals(articleChildNodelist.item(t).getNodeName())) {
-                                        article.endPage = Integer.parseInt(issueChildNodelist.item(t).getFirstChild().getNodeValue());
+                                        article.endPage = articleChildNodelist.item(t).getFirstChild().getNodeValue();
                                     } else if ("authors".equals(articleChildNodelist.item(t).getNodeName())) {
                                         List<String> authors = new ArrayList<>();
                                         NodeList authorNodeList = ((Element)articleChildNodelist.item(t)).getElementsByTagName("author");
-                                        for (int p = 0; p < authorNodeList.getLength(); p++) {
-
-                                            authors.add(authorNodeList.item(p).getNodeValue());
+                                        for (int p = 0; p < authorNodeList.getLength(); p++)
+                                            if(authorNodeList.item(p).getNodeType() == Node.ELEMENT_NODE){
+                                            authors.add(authorNodeList.item(p).getFirstChild().getNodeValue());
                                         }
                                         article.authors = authors;
                                     }
@@ -117,8 +124,10 @@ public class DomParseService {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        InputStream is = new BufferedInputStream("test.xml");
+        InputStream is = new FileInputStream("test.xml");
+
         SigmodRecord sr = getBooks(is);
 
+        System.out.println(sr.toString());
     }
 }

@@ -17,6 +17,12 @@ public class TreeNode {
         totalWeight = weight;
     }
 
+    public TreeNode(String name) {
+        label = name;
+        weight = name.length() + 1; // another slots for metadata.
+        totalWeight = weight;
+    }
+
     public void addSon(TreeNode... t) {
         Collections.addAll(sons, t);
     }
