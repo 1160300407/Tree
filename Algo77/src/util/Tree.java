@@ -22,6 +22,17 @@ public class Tree {
         l.add(u);
     }
 
+    public static int count(TreeNode u) {
+        if (u == null) return 0;
+        int result = 1;
+        for (int i = 0; i < u.sons.size(); i++) {
+            result += count(u.sons.get(i));
+            //u.totalWeight += u.sons.get(i).totalWeight;
+        }
+        return result;
+        //l.add(u);
+    }
+
     public List<TreeNode> postOrder() {
         l = new ArrayList<>();
         dfs(root);

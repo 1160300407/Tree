@@ -31,4 +31,5 @@ public class TreeNode {
         return sons.isEmpty();
     }
 
+   // public int total
 }

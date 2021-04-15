@@ -33,12 +33,16 @@ public class XmlParser {
             for(int j = 0;j < issueChildNodelist.getLength();j++) {
                 if(issueChildNodelist.item(j).getNodeType() == Node.ELEMENT_NODE) { //看看这里面有什么属性node（有TEXT_NODE ，即那些空白，<span style="color:#ff0000;">如图2</span>）
                     if("volume".equals(issueChildNodelist.item(j).getNodeName())) {
+                        TreeNode volume = new TreeNode("volume", 1);
                         TreeNode vo = new TreeNode(issueChildNodelist.item(j).getFirstChild().getNodeValue());
-                        issue.addSon(vo);
+                        volume.addSon(vo);
+                        issue.addSon(volume);
                         //issue.volume = issueChildNodelist.item(j).getFirstChild().getNodeValue();
                     } else if("number".equals(issueChildNodelist.item(j).getNodeName())) {
+                        TreeNode number = new TreeNode("number", 1);
                         TreeNode nu = new TreeNode(issueChildNodelist.item(j).getFirstChild().getNodeValue());
-                        issue.addSon(nu);
+                        number.addSon(nu);
+                        issue.addSon(number);
                         //issue.number = issueChildNodelist.item(j).getFirstChild().getNodeValue();  //<span style="color:#ff0000;">如图3</span>
                     } else if ("articles".equals(issueChildNodelist.item(j).getNodeName())) {
                         TreeNode articles = new TreeNode("articles", 1);
@@ -54,13 +58,22 @@ public class XmlParser {
                             for (int t = 0; t < articleChildNodelist.getLength(); t++) {
                                 if(articleChildNodelist.item(t).getNodeType() == Node.ELEMENT_NODE) {
                                     if("title".equals(articleChildNodelist.item(t).getNodeName())) {
-                                        article.addSon(new TreeNode(articleChildNodelist.item(t).getFirstChild().getNodeValue()));
+                                        TreeNode title = new TreeNode("title", 1);
+                                        TreeNode ti = new TreeNode(articleChildNodelist.item(t).getFirstChild().getNodeValue());
+                                        title.addSon(ti);
+                                        article.addSon(title);
                                         //article.title = articleChildNodelist.item(t).getFirstChild().getNodeValue();
                                     } else if ("initPage".equals(articleChildNodelist.item(t).getNodeName())) {
-                                        article.addSon(new TreeNode(articleChildNodelist.item(t).getFirstChild().getNodeValue()));
+                                        TreeNode iP = new TreeNode("initPage", 1);
+                                        TreeNode initPage = new TreeNode(articleChildNodelist.item(t).getFirstChild().getNodeValue());
+                                        iP.addSon(initPage);
+                                        article.addSon(iP);
                                         //article.initPage = articleChildNodelist.item(t).getFirstChild().getNodeValue();
                                     } else if ("endPage".equals(articleChildNodelist.item(t).getNodeName())) {
-                                        article.addSon(new TreeNode(articleChildNodelist.item(t).getFirstChild().getNodeValue()));
+                                        TreeNode endPage = new TreeNode("endPage", 1);
+                                        TreeNode eP = new TreeNode(articleChildNodelist.item(t).getFirstChild().getNodeValue());
+                                        endPage.addSon(eP);
+                                        article.addSon(endPage);
                                         //article.endPage = articleChildNodelist.item(t).getFirstChild().getNodeValue();
                                     } else if ("authors".equals(articleChildNodelist.item(t).getNodeName())) {
                                         TreeNode authors = new TreeNode("authors", 1);
@@ -68,7 +81,16 @@ public class XmlParser {
                                         NodeList authorNodeList = ((Element)articleChildNodelist.item(t)).getElementsByTagName("author");
                                         for (int p = 0; p < authorNodeList.getLength(); p++)
                                             if(authorNodeList.item(p).getNodeType() == Node.ELEMENT_NODE){
-                                                authors.addSon(new TreeNode(authorNodeList.item(p).getFirstChild().getNodeValue()));
+                                                TreeNode author = new TreeNode("author", 1);
+                                                Node pos = ((Element)authorNodeList.item(p)).getAttributeNode("position");
+                                                TreeNode posiValue = new TreeNode(pos.getNodeValue());
+                                                TreeNode posi = new TreeNode("position", 1);
+                                                posi.addSon(posiValue);
+                                                author.addSon(posi);
+                                                TreeNode authorName = new TreeNode(authorNodeList.item(p).getFirstChild().getNodeValue());
+                                                author.addSon(authorName);
+                                                authors.addSon(author);
+                                               // authors.addSon(new TreeNode(authorNodeList.item(p).getFirstChild().getNodeValue()));
                                             }
                                         article.addSon(authors);
                                         //article.authors = authors;
@@ -89,10 +111,11 @@ public class XmlParser {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        InputStream is = new FileInputStream("test.xml");
+        InputStream is = new FileInputStream("SigmodRecord.xml");
 
         TreeNode root = getSigModRecord(is);
 
+        System.out.println(Tree.count(root));
         System.out.println(root.toString());
     }
 }
