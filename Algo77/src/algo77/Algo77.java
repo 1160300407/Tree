@@ -8,9 +8,11 @@ import java.util.List;
 public class Algo77 {
     int K;
     TreeNode root;
-    Algo77(TreeNode _root, int _k) {
+    public int ans;
+    public Algo77(TreeNode _root, int _k) {
         K = _k;
         root = _root;
+        ans = 0;
     }
 
     int partition(List<TreeNode> u,int start, int end) {
@@ -86,7 +88,8 @@ public class Algo77 {
         if (sum > K - u.weight) {
             List<TreeNode> heavy = split(u.sons, K - u.weight);
             for (TreeNode t : heavy) {
-                System.out.println("cut " + t.label);
+                ans ++;
+                //System.out.println("cut " + t.label);
                 sum -= t.totalWeight;
             }
         }

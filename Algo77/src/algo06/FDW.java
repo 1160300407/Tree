@@ -26,7 +26,7 @@ class Cell {
 }
 
 class CellList {
-    Cell[] cl;
+    public Cell[] cl;
 
     public CellList(int len) {
         cl = new Cell[len];

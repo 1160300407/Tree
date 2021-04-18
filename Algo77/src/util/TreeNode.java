@@ -19,7 +19,7 @@ public class TreeNode {
 
     public TreeNode(String name) {
         label = name;
-        weight = name.length() + 1; // another slots for metadata.
+        weight = (name.length()+7)/8 + 1; // another slots for metadata.
         totalWeight = weight;
     }
 

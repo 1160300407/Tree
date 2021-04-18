@@ -87,4 +87,8 @@ public class RS {
         }
         return ans.toString();
     }
+
+    public int getPartitionNumber() {
+        return result.size();
+    }
 }

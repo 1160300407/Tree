@@ -13,12 +13,14 @@ public class GHDW {
     CellList[][] D;
     List<TreeNode> nodes;
     TreeNode root;
+    public int ans;
 
-    public GHDW(int _k, TreeNode root) {
+    public GHDW(TreeNode root, int _k) {
         K = _k;
         this.root = root;
         t = new Tree(root);
         nodes = t.postOrder();
+        ans = 0;
         D = new CellList[nodes.size()][K + 1];
 
         for (int v = 0; v < nodes.size(); v++) {
@@ -58,7 +60,7 @@ public class GHDW {
                             int crd = D[v][s].cl[j - m - 1].card + 1;
                             int rw = D[v][s].cl[j - m - 1].rootweight;
                             if (crd < P.card || (crd == P.card && rw < P.rootweight)) {
-                                P.begin = c.get(j - m-1);
+                                P.begin = c.get(j - m - 1);
                                 P.end = c.get(j-1);
                                 P.card = crd;
                                 P.rootweight = rw;
@@ -71,6 +73,7 @@ public class GHDW {
                     D[v][s].cl[j] = P;
                 }
             }
+            ans += D[v][nodes.get(v).weight].cl[nodes.get(v).sons.size()].card;
         }
     }
 

@@ -21,6 +21,7 @@ public class EKM {
 
         dfs(root);
         if (part.size() != 0) result.add(part);
+
     }
 
     public Comparator<TreeNode> cmp = new Comparator<TreeNode>() {
@@ -104,6 +105,10 @@ public class EKM {
             ans.append("\n");
         }
         return ans.toString();
+    }
+
+    public int getPartitionNumber() {
+        return result.size();
     }
 
 

@@ -68,4 +68,8 @@ public class KM {
         }
         return ans.toString();
     }
+
+    public int getPartitionNumer() {
+        return result.size();
+    }
 }

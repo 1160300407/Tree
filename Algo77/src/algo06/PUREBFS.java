@@ -6,7 +6,19 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+/*
+"The same strategy explained above can also be applied to breadth-
+first search, where for each visited node, we try to add it to the partition of its parent, and if that is full, to the partition of its previous
+sibling. BFS is not main-memory friendly, as we need to see all of
+the nodes in the document to perform proper breadth-first search.
+We include it for reasons of completeness."
 
+REMARK: for node u, it doesn't iterate all the u's son's weight,
+which will cause much more partitions than the experiment in Paper.
+Hyposis it iterate son's totalWeight instead of son's weight.
+
+Due to "for reasons of completeness", leave this behind for now.
+ */
 public class PUREBFS {
     TreeNode root;
     int K;
@@ -60,5 +72,9 @@ public class PUREBFS {
             ans.append("\n");
         }
         return ans.toString();
+    }
+
+    public int getPartitionNumber() {
+        return result.size();
     }
 }

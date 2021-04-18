@@ -12,9 +12,11 @@ import java.util.PriorityQueue;
 public class DHW {
     final int MAX_CARDINAL = 1000000;
     static int K;
-    Tree t;
-    CellList[][] D;
+    Tree tree;
+    public CellList[][] D;
     List<TreeNode> nodes;
+    public int ans;
+    TreeNode root;
 
     public int getTriW(TreeNode t) {
         Cell cm = D[t.index][t.weight].cl[t.sons.size()];
@@ -38,9 +40,11 @@ public class DHW {
 
     public DHW(TreeNode root, int _k) {
         K = _k;
-        t = new Tree(root);
-        nodes = t.postOrder();
-        D = new CellList[nodes.size()][K + 1];
+        this.root = root;
+        tree = new Tree(root);
+        nodes = tree.postOrder();
+        D = new CellList[nodes.size()+1][K + 1];
+        ans = 0;
 
         for (int v = 0; v < nodes.size(); v++) {
             TreeNode u = nodes.get(v);
@@ -48,7 +52,7 @@ public class DHW {
             List<TreeNode> c = u.sons;
             int n = c.size();
             for (int i = 0; i <= K; i++)
-                D[v][i] = new CellList(n);
+                D[v][i] = new CellList(n+1);
             for (int i = 0; i <= K; i++)
                 for (int j = 0; j <= n; j++)
                     D[v][i].cl[j] = new Cell();
@@ -78,14 +82,19 @@ public class DHW {
                         TreeNode t = c.get(j-m-1);
                         w += D[t.index][t.weight].cl[t.sons.size()].rootweight;
                         dw += getTriW(t);
+                        C.add(t);
                         if (w - dw <= K) {
+                            PriorityQueue<TreeNode> Ct = new PriorityQueue<>(cmp);
+                            Object[] nn= C.toArray();
+                            for (Object nnt : nn) {
+                                Ct.add((TreeNode) nnt);
+                            }
                             int crd = D[v][s].cl[j - m - 1].card + 1;
                             int rw = D[v][s].cl[j - m - 1].rootweight;
-                            C.add(c.get(j-m-1));
                             int wi = w;
                             List<TreeNode> N = new ArrayList<>();
                             while (wi > K) {
-                                TreeNode un = C.poll();
+                                TreeNode un = Ct.poll();
                                 wi -= getTriW(un);
                                 N.add(un);
                                 crd ++;
@@ -105,6 +114,7 @@ public class DHW {
                     D[v][s].cl[j] = P;
                 }
             }
+            ans += D[v][nodes.get(v).weight].cl[nodes.get(v).sons.size()].card;
         }
     }
 
@@ -119,5 +129,8 @@ public class DHW {
 //            j = tmp_j;
 //        }
        // return result;
+    }
+    public int getAns() {
+        return D[root.index][root.weight].cl[root.sons.size()].card;
     }
 }
