@@ -13,6 +13,7 @@ class Cell {
     List<TreeNode> nearlyopt;
     public Cell() {
         next = new int[2];
+        //nearlyopt = new ArrayList<>();
     }
 
     public void copy(Cell y) {

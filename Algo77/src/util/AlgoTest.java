@@ -9,8 +9,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static util.TreeNodeParser.getSigModRecord;
-
 public class AlgoTest {
     public TreeNode root;
     public int K = 352;
@@ -56,7 +54,8 @@ public class AlgoTest {
 
     public int calcDHW() {
         DHW g = new DHW(root, K);
-        return g.getAns();
+        g.getPartition();
+        return g.ans;
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
@@ -110,5 +109,5 @@ DFS :2677
 KM :1506
 //BFS :15264
 GHDW: 263
-FDW:
+DHW: 1098
  */

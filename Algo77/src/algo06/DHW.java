@@ -3,10 +3,7 @@ package algo06;
 import util.Tree;
 import util.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 //optimal algorithm
 public class DHW {
@@ -64,7 +61,7 @@ public class DHW {
                 D[v][s].cl[0].rootweight = s;
                 D[v][s].cl[0].next[0] = 0;
                 D[v][s].cl[0].next[1] = 0;
-                D[v][s].cl[0].nearlyopt = new ArrayList<>();
+                //D[v][s].cl[0].nearlyopt = new ArrayList<>();
             }
 
             for (int j = 1; j <= n; j++) {
@@ -114,12 +111,34 @@ public class DHW {
                     D[v][s].cl[j] = P;
                 }
             }
-            ans += D[v][nodes.get(v).weight].cl[nodes.get(v).sons.size()].card;
         }
     }
 
     public void getPartition() {
-        List<Cell> result = new ArrayList<>();
+       // Cell f = D[root.index][root.weight+].cl[root.sons.size()];
+       // ans = f.card;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode u = q.poll();
+            Cell f =  D[u.index][u.weight].cl[u.sons.size()];
+            System.out.println("u:"+u.index + " card:"+f.card + " nearlyopt:" + f.nearlyopt);
+            ans += f.card;
+            if (f.nearlyopt != null)
+            for (int i = 0; i < f.nearlyopt.size(); i++) {
+                for (int j = 0 ; j < f.nearlyopt.get(i).sons.size(); j++)
+                    q.add(f.nearlyopt.get(i).sons.get(j));
+            }
+            for (int i = 0; i < u.sons.size(); i++) {
+                if (f.nearlyopt == null || f.nearlyopt.contains(u.sons.get(i)) == false ) {
+                        q.add(u.sons.get(i));
+                        ans --;
+                }
+            }
+        }
+
+        //List<Cell> result = new ArrayList<>();
 //        int i = root.weight, j = root.sons.size();
 //        while (i != 0 || j != 0) {
 //            result.add(d[i][j]);
@@ -130,7 +149,5 @@ public class DHW {
 //        }
        // return result;
     }
-    public int getAns() {
-        return D[root.index][root.weight].cl[root.sons.size()].card;
-    }
+    public int getAns() {return ans;}
 }
