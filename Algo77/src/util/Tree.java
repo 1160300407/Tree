@@ -13,7 +13,7 @@ public class Tree {
     public Tree(TreeNode u) {
         root = u;
     }
-    private void dfs(TreeNode u) {
+    void dfs(TreeNode u) {
         //if (u.sons.size() == 0) {l.add(u);return;}
         if (u.isLeaf() == true) u.totalWeight = u.weight;
         else {

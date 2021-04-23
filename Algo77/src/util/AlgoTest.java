@@ -63,6 +63,8 @@ public class AlgoTest {
         TreeNode root = TreeNodeParser.getSigModRecord(is);
         Tree tree = new Tree(root);
         System.out.println("total nodes:" + tree.count(root));
+        tree.postOrder();
+        System.out.println("size:"+root.totalWeight);
         AlgoTest test = new AlgoTest(root);
 
 //        System.out.print("Algo77 :");
@@ -77,8 +79,8 @@ public class AlgoTest {
 //        System.out.print("DFS :");
 //        System.out.println(test.calcDFS());
 
-//        System.out.print("KM :");
-//        System.out.println(test.calcKM());
+        System.out.print("KM :");
+        System.out.println(test.calcKM());
 
 //        System.out.print("BFS :");
 //        System.out.println(test.calcBFS());
@@ -86,8 +88,8 @@ public class AlgoTest {
 //        System.out.print("GHDW :");
 //        System.out.println(test.calcGHDW());
 
-        System.out.print("DHW :");
-        System.out.println(test.calcDHW());
+//        System.out.print("DHW :");
+//        System.out.println(test.calcDHW());
         return;
     }
 }
