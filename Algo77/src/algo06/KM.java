@@ -24,7 +24,7 @@ public class KM {
         sum = new ArrayList<>();
         this.root = root;
 
-        dfs(root);
+        sdfs();
         if (root.totalWeight != 0) {sum.add(root.totalWeight);result.add(part);}
     }
 
@@ -33,6 +33,31 @@ public class KM {
             return o2.totalWeight - o1.totalWeight;
         }
     };
+
+
+    public void sdfs() {
+        for (int i = 0; i < nodes.size(); i++) {
+            TreeNode u = nodes.get(i);//System.out.println(u.totalWeight);
+            if (u.totalWeight <= K) continue;
+            u.totalWeight = u.weight;
+            PriorityQueue<TreeNode> q = new PriorityQueue<>(cmp);
+            for (int j = 0; j < u.sons.size(); j++) {
+                u.totalWeight += u.sons.get(j).totalWeight;
+                q.add(u.sons.get(j));
+            }
+            if (u.totalWeight <= K) continue;
+            while (u.totalWeight > K) {
+                TreeNode t = q.poll();
+                u.totalWeight -= t.totalWeight;
+                sum.add(t.totalWeight);
+                t.totalWeight = 0;
+                part.add(u);
+                result.add(part);
+                part = new ArrayList<>();
+            }
+            //pruneChildren(u, q);
+        }
+    }
 
     public void dfs() {
         for (int i = 0; i < nodes.size(); i++) {
