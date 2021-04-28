@@ -89,9 +89,9 @@ public class GHDW {
 //            if (D[v][i].cl[j].begin.label.equals(D[v][i].cl[j].end.label)) {
 //                getPartition(D[v][i].cl[j].begin.index);
 //            }
-            if (D[v][i].cl[j].begin != null)
-                System.out.println(D[v][i].cl[j].begin.label+"-"+D[v][i].cl[j].end.label+":"+D[v][i].cl[j].card+" rw:"+D[v][i].cl[j].rootweight);
-            else System.out.println(nodes.get(v).label);
+           // if (D[v][i].cl[j].begin != null)
+                //System.out.println(D[v][i].cl[j].begin.label+"-"+D[v][i].cl[j].end.label+":"+D[v][i].cl[j].card+" rw:"+D[v][i].cl[j].rootweight);
+            //else System.out.println(nodes.get(v).label);
             int tmp_i = D[v][i].cl[j].next[0];
             int tmp_j = D[v][i].cl[j].next[1];
             i = tmp_i;

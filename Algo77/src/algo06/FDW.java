@@ -98,7 +98,7 @@ public class FDW {
         int i = root.weight, j = root.sons.size();
         while (i != 0 || j != 0) {
             result.add(d[i].cl[j]);
-            System.out.println(d[i].cl[j].begin.label+"-"+d[i].cl[j].end.label+":"+d[i].cl[j].card+" rw:"+d[i].cl[j].rootweight);
+            //System.out.println(d[i].cl[j].begin.label+"-"+d[i].cl[j].end.label+":"+d[i].cl[j].card+" rw:"+d[i].cl[j].rootweight);
             int tmp_i = d[i].cl[j].next[0];
             int tmp_j = d[i].cl[j].next[1];
             i = tmp_i;

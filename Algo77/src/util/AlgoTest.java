@@ -60,10 +60,10 @@ public class AlgoTest {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        String name = "C:\\Users\\29069\\Desktop\\data\\";
+        String name = "D:\\XMLdata\\";
         FileOutputStream out = new FileOutputStream(name+"xmark.txt");
         for (int s = 1; s <= 4; s++) {
-            StringBuilder fileprefix = new StringBuilder(name);
+            StringBuilder fileprefix = new StringBuilder(name+"x");
             String filename = fileprefix.append(s).append("g.xml").toString();
             System.out.println("opening "+filename);
             InputStream is = new FileInputStream(filename);
@@ -82,6 +82,7 @@ public class AlgoTest {
             out.write(String.valueOf(test.calcKM()).getBytes());
             out.write('\n');
         }
+        out.close();
         //InputStream is = new FileInputStream("SigmodRecord.xml");
 
 

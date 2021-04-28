@@ -101,7 +101,7 @@ public class EKM {
         ans.append("\n");
         for (int i = 0; i < result.size(); i++) {
             for (int j = 0; j < result.get(i).size(); j++)
-                ans.append(result.get(i).get(j).label + " ");
+                //ans.append(result.get(i).get(j).label + " ");
             ans.append("\n");
         }
         return ans.toString();
