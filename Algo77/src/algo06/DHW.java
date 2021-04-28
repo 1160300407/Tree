@@ -115,39 +115,48 @@ public class DHW {
     }
 
     public void getPartition() {
-       // Cell f = D[root.index][root.weight+].cl[root.sons.size()];
-       // ans = f.card;
-
+        ans = 1;
         Queue<TreeNode> q = new LinkedList<>();
+        Queue<Integer> qn = new LinkedList<>();
         q.add(root);
+        qn.add(1);
         while (!q.isEmpty()) {
             TreeNode u = q.poll();
-            Cell f =  D[u.index][u.weight].cl[u.sons.size()];
-            System.out.println("u:"+u.index + " card:"+f.card + " nearlyopt:" + f.nearlyopt);
-            ans += f.card;
-            if (f.nearlyopt != null)
-            for (int i = 0; i < f.nearlyopt.size(); i++) {
-                for (int j = 0 ; j < f.nearlyopt.get(i).sons.size(); j++)
-                    q.add(f.nearlyopt.get(i).sons.get(j));
+            Integer un = qn.poll();
+            int v = u.index, i = u.weight, j = u.sons.size();
+
+            Cell f;
+            if (un.equals((Integer)1))
+                f = D[v][i].cl[j];
+            else {
+                int Dcm = D[v][i].cl[j].rootweight;
+                f = D[v][i - Dcm + K + 1].cl[j];
             }
-            for (int i = 0; i < u.sons.size(); i++) {
-                if (f.nearlyopt == null || f.nearlyopt.contains(u.sons.get(i)) == false ) {
-                        q.add(u.sons.get(i));
-                        ans --;
+            //System.out.println("u:"+u.index + " card:"+f.card + " nearlyopt:" + f.nearlyopt);
+            ans += f.card-1;
+
+            for (TreeNode t : u.sons) {
+                if (f.nearlyopt == null || f.nearlyopt.contains(t) == false) {
+                    q.add(t);
+                    qn.add(1);
                 }
+            }
+
+            while (i != 0 || j != 0) {
+                if (D[v][i].cl[j].nearlyopt != null) {
+                    for (TreeNode t : D[v][i].cl[j].nearlyopt) {
+                        q.add(t);
+                        qn.add(0);
+                    }
+                }
+                //result.add(d[i][j]);
+                int tmp_i = D[v][i].cl[j].next[0];
+                int tmp_j = D[v][i].cl[j].next[1];
+                i = tmp_i;
+                j = tmp_j;
             }
         }
 
-        //List<Cell> result = new ArrayList<>();
-//        int i = root.weight, j = root.sons.size();
-//        while (i != 0 || j != 0) {
-//            result.add(d[i][j]);
-//            int tmp_i = d[i][j].next[0];
-//            int tmp_j = d[i][j].next[1];
-//            i = tmp_i;
-//            j = tmp_j;
-//        }
-       // return result;
     }
     public int getAns() {return ans;}
 }

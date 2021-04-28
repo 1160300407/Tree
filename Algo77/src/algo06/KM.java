@@ -154,14 +154,14 @@ public class KM {
     }
 
     public int getPartitionNumer() {
-        int tot = 0;
+        /*int tot = 0;
         for (int i = 0; i < sum.size(); i++)
         {
             tot += sum.get(i);
            // System.out.println(sum.get(i));
-            if (sum.get(i) > 352) System.out.println("---------------");
-        }
-        System.out.println(tot);
+            if (sum.get(i) > K) System.out.println("---------------");
+        }*/
+        //System.out.println(tot);
         return result.size();
     }
 }

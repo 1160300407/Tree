@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -59,13 +60,32 @@ public class AlgoTest {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        InputStream is = new FileInputStream("SigmodRecord.xml");
-        TreeNode root = TreeNodeParser.getSigModRecord(is);
-        Tree tree = new Tree(root);
-        System.out.println("total nodes:" + tree.count(root));
-        tree.postOrder();
-        System.out.println("size:"+root.totalWeight);
-        AlgoTest test = new AlgoTest(root);
+        String name = "C:\\Users\\29069\\Desktop\\data\\";
+        FileOutputStream out = new FileOutputStream(name+"xmark.txt");
+        for (int s = 1; s <= 4; s++) {
+            StringBuilder fileprefix = new StringBuilder(name);
+            String filename = fileprefix.append(s).append("g.xml").toString();
+            System.out.println("opening "+filename);
+            InputStream is = new FileInputStream(filename);
+            TreeNode root = TreeNodeParser.getSigModRecord(is);
+            Tree tree = new Tree(root);
+            out.write(new String("file:" + filename).getBytes());
+            out.write(new String("total nodes:" + tree.count(root)).getBytes());
+            System.out.println("total nodes:" + tree.count(root));
+            tree.postOrder();
+            System.out.println("size:"+root.totalWeight);
+            out.write(new String("size:"+root.totalWeight).getBytes());
+            out.write('\n');
+            AlgoTest test = new AlgoTest(root);
+            //System.out.print("KM :");
+            System.out.println(test.calcKM());
+            out.write(String.valueOf(test.calcKM()).getBytes());
+            out.write('\n');
+        }
+        //InputStream is = new FileInputStream("SigmodRecord.xml");
+
+
+
 
 //        System.out.print("Algo77 :");
 //        System.out.println(test.calcAlgo77());
@@ -79,8 +99,7 @@ public class AlgoTest {
 //        System.out.print("DFS :");
 //        System.out.println(test.calcDFS());
 
-        System.out.print("KM :");
-        System.out.println(test.calcKM());
+
 
 //        System.out.print("BFS :");
 //        System.out.println(test.calcBFS());
