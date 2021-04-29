@@ -1,5 +1,3 @@
-package util;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,10 +7,7 @@ public class TreeNode {
     static int total = 0;
     public int weight;
     public int totalWeight;
-    public String label;
-    public int index;
     public List<TreeNode> sons;
-    public TreeNode sibling;
     public TreeNode(String name, int w) {
       //  label = name;
         weight = w;
@@ -50,5 +45,4 @@ public class TreeNode {
         return (sons == null || sons.isEmpty());
     }
 
-   // public int total
 }

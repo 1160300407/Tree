@@ -6,7 +6,7 @@ import util.TreeNode;
 import java.util.*;
 
 //optimal algorithm
-public class DHW {
+public class DHW {/*
     final int MAX_CARDINAL = 1000000;
     static int K;
     Tree tree;
@@ -158,5 +158,5 @@ public class DHW {
         }
 
     }
-    public int getAns() {return ans;}
+    public int getAns() {return ans;}*/
 }

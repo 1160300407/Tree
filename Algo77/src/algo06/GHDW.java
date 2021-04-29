@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GHDW {
-    final int MAX_CARDINAL = 1000000;
+    /*final int MAX_CARDINAL = 1000000;
     static int K;
     Tree t;
     CellList[][] D;
@@ -81,10 +81,10 @@ public class GHDW {
         List<Cell> result = new ArrayList<>();
         int v = root.index;
         int i = nodes.get(v).weight, j = nodes.get(v).sons.size();
-       /* if (D[v][i].cl[j].begin == null) {
+        if (D[v][i].cl[j].begin == null) {
             System.out.println("whole subtree of "+nodes.get(v).label);
             return;
-        }*/
+        }
         while ((i != 0 || j != 0)) {
 //            if (D[v][i].cl[j].begin.label.equals(D[v][i].cl[j].end.label)) {
 //                getPartition(D[v][i].cl[j].begin.index);
@@ -92,10 +92,10 @@ public class GHDW {
            // if (D[v][i].cl[j].begin != null)
                 //System.out.println(D[v][i].cl[j].begin.label+"-"+D[v][i].cl[j].end.label+":"+D[v][i].cl[j].card+" rw:"+D[v][i].cl[j].rootweight);
             //else System.out.println(nodes.get(v).label);
-            int tmp_i = D[v][i].cl[j].next[0];
-            int tmp_j = D[v][i].cl[j].next[1];
-            i = tmp_i;
-            j = tmp_j;
+            //int tmp_i = D[v][i].cl[j].next[0];
+            //int tmp_j = D[v][i].cl[j].next[1];
+            //i = tmp_i;
+            //j = tmp_j;
         }
 //            result.add(d[i][j]);
 //            int tmp_i = d[i][j].next[0];
@@ -105,6 +105,6 @@ public class GHDW {
 //        }
 //        return result;
     }
-
+*/
 
 }

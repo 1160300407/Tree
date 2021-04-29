@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Algo77/Algo77.iml" filepath="$PROJECT_DIR$/Algo77/Algo77.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KMexp/KMexp.iml" filepath="$PROJECT_DIR$/KMexp/KMexp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TreePartition.iml" filepath="$PROJECT_DIR$/.idea/TreePartition.iml" />
     </modules>
   </component>
