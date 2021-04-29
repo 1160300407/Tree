@@ -60,26 +60,27 @@ public class AlgoTest {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        String name = "D:\\XMLdata\\";
-        FileOutputStream out = new FileOutputStream(name+"xmark.txt");
-        for (int s = 1; s <= 4; s++) {
-            StringBuilder fileprefix = new StringBuilder(name+"x");
-            String filename = fileprefix.append(s).append("g.xml").toString();
+        String name = "C:\\Users\\29069\\Desktop\\data\\";
+        FileOutputStream out = new FileOutputStream(name+"xmark.txt",true);
+        for (int s = 4; s <= 5 ; s++) {
+            StringBuilder fileprefix = new StringBuilder(name+"xf");
+            String filename = fileprefix.append(s).append(".xml").toString();
             System.out.println("opening "+filename);
             InputStream is = new FileInputStream(filename);
             TreeNode root = TreeNodeParser.getSigModRecord(is);
             Tree tree = new Tree(root);
             out.write(new String("file:" + filename).getBytes());
-            out.write(new String("total nodes:" + tree.count(root)).getBytes());
-            System.out.println("total nodes:" + tree.count(root));
+            out.write(new String(" total nodes:" + TreeNode.total).getBytes());
+            System.out.println("total nodes:" + TreeNode.total);
             tree.postOrder();
             System.out.println("size:"+root.totalWeight);
-            out.write(new String("size:"+root.totalWeight).getBytes());
-            out.write('\n');
+            out.write(new String(" size:"+root.totalWeight).getBytes());
+           // out.write('\n');
             AlgoTest test = new AlgoTest(root);
             //System.out.print("KM :");
-            System.out.println(test.calcKM());
-            out.write(String.valueOf(test.calcKM()).getBytes());
+            int ans = test.calcKM();
+            System.out.println(ans);
+            out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
             out.write('\n');
         }
         out.close();

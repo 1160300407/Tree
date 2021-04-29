@@ -20,6 +20,9 @@ public class TreeNode {
         wholeSize += weight;
         total ++;
         if (total % 100000 == 0) System.out.println(total+" nodes");
+        if (total == 5000000) {
+            System.out.println("pause");
+        }
     }
 
     public TreeNode(String name) {
@@ -29,6 +32,9 @@ public class TreeNode {
         wholeSize += weight;
         total ++;
         if (total % 100000 == 0) System.out.println(total+" nodes");
+        if (total == 5000000) {
+            System.out.println("pause");
+        }
     }
 
     public void addSon(TreeNode... t) {
@@ -46,7 +52,7 @@ public class TreeNode {
     }
 
     public boolean isLeaf() {
-        return sons.isEmpty();
+        return (sons == null || sons.isEmpty());
     }
 
    // public int total

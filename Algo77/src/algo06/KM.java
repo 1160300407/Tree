@@ -41,12 +41,13 @@ public class KM {
             if (u.totalWeight <= K) continue;
             u.totalWeight = u.weight;
             PriorityQueue<TreeNode> q = new PriorityQueue<>(cmp);
+            if (u.sons != null)
             for (int j = 0; j < u.sons.size(); j++) {
                 u.totalWeight += u.sons.get(j).totalWeight;
                 q.add(u.sons.get(j));
             }
             if (u.totalWeight <= K) continue;
-            while (u.totalWeight > K) {
+            while (u.totalWeight > K && q.isEmpty() == false) {
                 TreeNode t = q.poll();
                 u.totalWeight -= t.totalWeight;
                 sum.add(t.totalWeight);

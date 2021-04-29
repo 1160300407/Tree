@@ -36,9 +36,12 @@ public class TreeNodeParser {
                 ut.addSon(at);
             }
         }
-        NodeList nl = u.getChildNodes();
-        for (int i = 0; i < nl.getLength(); i++) {
-            dfsParse(nl.item(i), ut);
+        //NodeList nl = u.getChildNodes();
+        //int tnl = nl.getLength();
+        Node fc = u.getFirstChild();
+        while (fc != null) {
+            dfsParse(fc, ut);
+            fc = fc.getNextSibling();
         }
         father.addSon(ut);
     }
