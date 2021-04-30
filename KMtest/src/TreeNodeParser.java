@@ -16,7 +16,6 @@ import java.util.List;
 public class TreeNodeParser {
     static int sum = 0;
     static FileOutputStream out = null;
-    static int num = 0;
     public TreeNodeParser(FileOutputStream oo) {
         out = oo;
     }
@@ -67,53 +66,41 @@ public class TreeNodeParser {
     public static void dfsParseToFile(Node u, int index) throws IOException {
         if (u.getNodeType() == Node.COMMENT_NODE || u.getNodeType() == Node.TEXT_NODE || u.getNodeType() == Node.DOCUMENT_TYPE_NODE) {
             if (u.getNodeValue() == null) {//DOCUMENT_TYPE_NODE
-                //num ++;
                 writeNode(index, 1, null);
-                //father.addSon(ut);
                 return;
             }
-            //num ++;
             writeNode(index, (u.getNodeValue().getBytes().length+7)/8+1, null);
-            //ut = new TreeNode(u.getNodeValue());
-            //father.addSon(ut);
             return;
         }
 
-        //ut = new TreeNode(u.getNodeName(),   seek sons
         if (u.hasAttributes()) {
             NamedNodeMap t = u.getAttributes();
             for (int i = 0; i < t.getLength(); i++) {
                 List<Integer> s = new LinkedList<>(); s.add(index + 2);
                 writeNode(index + 1, 1, s);
-                //TreeNode at = new TreeNode(t.item(i).getNodeName(), 1);
                 TreeNode atson = new TreeNode(t.item(i).getFirstChild().getNodeValue());
                 writeNode(index + 2, (t.item(i).getFirstChild().getNodeValue().getBytes().length+7)/8+1, null);
-                //at.addSon(atson);
-                //ut.addSon(at);
+
                 index += 2;
             }
         }
-        //NodeList nl = u.getChildNodes();
-        //int tnl = nl.getLength();
         Node fc = u.getFirstChild();
         List<Integer> s = new LinkedList<>();
         int nn = 0;
         while (fc != null) {
             nn ++;
             s.add(index + nn);
-            //dfsParse(fc, ut);
             fc = fc.getNextSibling();
         }
         writeNode(index, 1, s);
+
         fc = u.getFirstChild();
         nn = 0;
         while (fc != null) {
             nn ++;
-            //s.add(index + nn);
             dfsParseToFile(fc, index + nn);
             fc = fc.getNextSibling();
         }
-       // father.addSon(ut);
 
     }
 
@@ -128,6 +115,26 @@ public class TreeNodeParser {
             dfsParse(nl.item(i), root);
         }
         return root;
+    }
+
+    public static void getRecordFile(InputStream inputSream) throws ParserConfigurationException, SAXException, IOException, IOException, SAXException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setIgnoringComments(false);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(inputSream);
+        NodeList nl = document.getChildNodes();
+        writeNode(0, 1, );
+        List<Integer> s = new LinkedList<>();
+        //TreeNode root = new TreeNode("root", 1);
+        for (int i = 0; i < nl.getLength(); i++) {
+            s.add(i+1);
+           // dfsParseToFile(nl.item(i), 0);
+        }
+        writeNode(0, 1, s);
+        for (int i = 0; i < nl.getLength(); i++) {
+            //s.add(i+1);
+            dfsParseToFile(nl.item(i), i+1);
+        }
     }
 
 

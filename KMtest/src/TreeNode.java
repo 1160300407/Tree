@@ -6,7 +6,7 @@ public class TreeNode {
     static int total = 0;
     public int weight;
     public int totalWeight;
-    public int index;
+   // public int index;
     public List<TreeNode> sons;
     public TreeNode(String name, int w) {
       //  label = name;
@@ -20,7 +20,7 @@ public class TreeNode {
         weight = w;
         totalWeight = weight;
         total ++;
-        index = total;
+      //  index = total;
     }
 
     public TreeNode(String name) {

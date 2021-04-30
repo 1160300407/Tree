@@ -1,4 +1,3 @@
-
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,7 +22,39 @@ public class AlgoTest {
         String name1 = "C:\\Users\\29069\\Desktop\\data\\";
         String name = "D:\\XMLdata\\";
         FileOutputStream out = new FileOutputStream(name+"xmark.txt",true);
-        for (int s = 8; s <= 8 ; s++) {
+
+        for (int s = 0; s <= 0; s++) {
+            StringBuilder fileprefix = new StringBuilder(name+"x");
+            String filename = fileprefix.append(s).append("g.xml").toString();
+            System.out.println("opening "+filename);
+            InputStream is = new FileInputStream(filename);
+            TreeNode root = TreeNodeParser.getSigModRecord(is);
+        }
+
+
+        for (int s = 1; s <= 8 ; s++) {
+            StringBuilder fileprefix = new StringBuilder(name+"x");
+            String filename = fileprefix.append(s).append("g.xml").toString();
+            System.out.println("opening "+filename);
+            InputStream is = new FileInputStream(filename);
+            TreeNode root = TreeNodeParser.getSigModRecord(is);
+            Tree tree = new Tree(root);
+            out.write(new String("file:" + filename).getBytes());
+            out.write(new String(" total nodes:" + TreeNode.total).getBytes());
+            System.out.println("total nodes:" + TreeNode.total);
+            tree.postOrder();
+            System.out.println("size:"+root.totalWeight);
+            out.write(new String(" size:"+root.totalWeight).getBytes());
+            // out.write('\n');
+            AlgoTest test = new AlgoTest(root);
+            //System.out.print("KM :");
+            int ans = test.calcKM();
+            System.out.println(ans);
+            out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
+            out.write('\n');
+        }
+
+       /* for (int s = 1; s <= 8 ; s++) {
             StringBuilder fileprefix = new StringBuilder(name+"xf");
             String filename = fileprefix.append(s).append(".xml").toString();
             System.out.println("opening "+filename);
@@ -43,7 +74,7 @@ public class AlgoTest {
             System.out.println(ans);
             out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
             out.write('\n');
-        }
+        }*/
         out.close();
     }
 }
