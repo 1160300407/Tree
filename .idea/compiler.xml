@@ -12,7 +12,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="KMexp" target="14" />
-      <module name="maven" target="1.5" />
       <module name="TreePartition" target="1.5" />
     </bytecodeTargetLevel>
   </component>

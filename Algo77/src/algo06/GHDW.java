@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GHDW {
-    /*final int MAX_CARDINAL = 1000000;
+    final int MAX_CARDINAL = 1000000;
     static int K;
     Tree t;
     CellList[][] D;
@@ -105,6 +105,6 @@ public class GHDW {
 //        }
 //        return result;
     }
-*/
+
 
 }

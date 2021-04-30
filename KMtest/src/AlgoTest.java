@@ -20,9 +20,10 @@ public class AlgoTest {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        String name = "C:\\Users\\29069\\Desktop\\data\\";
+        String name1 = "C:\\Users\\29069\\Desktop\\data\\";
+        String name = "D:\\XMLdata\\";
         FileOutputStream out = new FileOutputStream(name+"xmark.txt",true);
-        for (int s = 5; s <= 5 ; s++) {
+        for (int s = 8; s <= 8 ; s++) {
             StringBuilder fileprefix = new StringBuilder(name+"xf");
             String filename = fileprefix.append(s).append(".xml").toString();
             System.out.println("opening "+filename);
