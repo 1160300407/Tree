@@ -1,81 +1,88 @@
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class AlgoTest {
-    public TreeNode root;
-    public int K = 352;
+    public static TreeNode root;
+    public static int K = 352;
     public AlgoTest(TreeNode r) {
         root = r;
     }
 
-    public int calcKM() {
+    public static int calcKM() {
         KM km = new KM(root, K);
         return km.getPartitionNumer();
+    }
+
+    public static void parseToFile(String filename) throws IOException, SAXException, ParserConfigurationException {
+        InputStream in = new FileInputStream(filename);
+        FileOutputStream out = new FileOutputStream(filename+".node",false);
+        TreeNodeParser.setOutputStream(out);
+        TreeNodeParser.getRecordFile(in);
+        out.close();
+        in.close();
+    }
+
+    public static void inmemoryParse(String filename) throws IOException, SAXException, ParserConfigurationException {
+        InputStream in = new FileInputStream(filename);
+        FileOutputStream out = new FileOutputStream(filename+"-xmark.result",true);
+
+        System.out.println("opening "+filename);
+        out.write(new String("file:" + filename).getBytes());
+        TreeNode r = TreeNodeParser.getSigModRecord(in);
+        root = r;
+//
+//        Tree tree = new Tree(root);
+//        System.out.println("total nodes:" + TreeNode.total);
+//        out.write(new String(" total nodes:" + TreeNode.total).getBytes());
+
+      //  tree.postOrder();
+      //  System.out.println("size:"+root.totalWeight);
+      //  out.write(new String(" size:"+root.totalWeight).getBytes());
+
+        int ans = calcKM();
+        System.out.println(ans);
+        out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
+        out.write('\n');
+        out.close();
+        in.close();
+    }
+
+    public static void basememoryParse(String filename) throws IOException, SAXException, ParserConfigurationException {
+        //TODO
+        InputStream in = new FileInputStream(filename);
+        FileOutputStream out = new FileOutputStream(filename+"-xmark.bsresult",true);
+
+        System.out.println("opening "+filename);
+        out.write(new String("file:" + filename).getBytes());
+        //TreeNode r = TreeNodeParser.getSigModRecord(in);
+
+        //  Tree tree = new Tree(root);
+        //  System.out.println("total nodes:" + TreeNode.total);
+        //  out.write(new String(" total nodes:" + TreeNode.total).getBytes());
+
+        //  tree.postOrder();
+        //  System.out.println("size:"+root.totalWeight);
+        //  out.write(new String(" size:"+root.totalWeight).getBytes());
+        //root = r;
+        int ans = calcKM();
+        System.out.println(ans);
+        out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
+        out.write('\n');
+        out.close();
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         String name1 = "C:\\Users\\29069\\Desktop\\data\\";
         String name = "D:\\XMLdata\\";
-        FileOutputStream out = new FileOutputStream(name+"xmark.txt",true);
+        //parseToFile(name);
+       // inmemoryParse(name);
 
-        for (int s = 0; s <= 0; s++) {
-            StringBuilder fileprefix = new StringBuilder(name+"x");
-            String filename = fileprefix.append(s).append("g.xml").toString();
-            System.out.println("opening "+filename);
-            InputStream is = new FileInputStream(filename);
-            TreeNode root = TreeNodeParser.getSigModRecord(is);
+        for (int s = 2; s <= 10 ; s++) {
+            String filename = name + "x" + s + "g.xml";
+            parseToFile(filename);
         }
-
-
-        for (int s = 1; s <= 8 ; s++) {
-            StringBuilder fileprefix = new StringBuilder(name+"x");
-            String filename = fileprefix.append(s).append("g.xml").toString();
-            System.out.println("opening "+filename);
-            InputStream is = new FileInputStream(filename);
-            TreeNode root = TreeNodeParser.getSigModRecord(is);
-            Tree tree = new Tree(root);
-            out.write(new String("file:" + filename).getBytes());
-            out.write(new String(" total nodes:" + TreeNode.total).getBytes());
-            System.out.println("total nodes:" + TreeNode.total);
-            tree.postOrder();
-            System.out.println("size:"+root.totalWeight);
-            out.write(new String(" size:"+root.totalWeight).getBytes());
-            // out.write('\n');
-            AlgoTest test = new AlgoTest(root);
-            //System.out.print("KM :");
-            int ans = test.calcKM();
-            System.out.println(ans);
-            out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
-            out.write('\n');
-        }
-
-       /* for (int s = 1; s <= 8 ; s++) {
-            StringBuilder fileprefix = new StringBuilder(name+"xf");
-            String filename = fileprefix.append(s).append(".xml").toString();
-            System.out.println("opening "+filename);
-            InputStream is = new FileInputStream(filename);
-            TreeNode root = TreeNodeParser.getSigModRecord(is);
-            Tree tree = new Tree(root);
-            out.write(new String("file:" + filename).getBytes());
-            out.write(new String(" total nodes:" + TreeNode.total).getBytes());
-            System.out.println("total nodes:" + TreeNode.total);
-            tree.postOrder();
-            System.out.println("size:"+root.totalWeight);
-            out.write(new String(" size:"+root.totalWeight).getBytes());
-           // out.write('\n');
-            AlgoTest test = new AlgoTest(root);
-            //System.out.print("KM :");
-            int ans = test.calcKM();
-            System.out.println(ans);
-            out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
-            out.write('\n');
-        }*/
-        out.close();
     }
 }
 /*

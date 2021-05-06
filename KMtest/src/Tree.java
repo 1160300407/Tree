@@ -11,7 +11,8 @@ public class Tree {
     }
     void dfs(TreeNode u) {
         //if (u.sons.size() == 0) {l.add(u);return;}
-        if (u.isLeaf() == true) u.totalWeight = u.weight;
+        if (u.isLeaf())
+            u.totalWeight = u.weight;
         else {
             u.totalWeight = u.weight;
             for (int i = 0; i < u.sons.size(); i++) {
