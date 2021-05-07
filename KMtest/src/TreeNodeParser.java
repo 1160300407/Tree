@@ -81,17 +81,61 @@ public class TreeNodeParser {
 
         Node fc = u.getFirstChild();
         while (fc != null) {
-            try {
+           // try {
                 dfsParseToFile(fc, s);
-            }catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.out.println(num);
-            }
+           // }catch (Exception e) {
+           //     System.out.println(e.getMessage());
+           //     System.out.println(num);
+           // }
             fc = fc.getNextSibling();
         }
         num ++;
         writeNode(num, 1, s);
         belong.add(num);
+    }
+
+    private static void NotPostdfsParseToFile(Node u, int index) throws IOException {
+        if (u.getNodeType() == Node.COMMENT_NODE || u.getNodeType() == Node.TEXT_NODE || u.getNodeType() == Node.DOCUMENT_TYPE_NODE) {
+            //num++;
+            if (u.getNodeValue() == null) {//DOCUMENT_TYPE_NODE
+                writeNode(index, 1, null);
+            } else
+                writeNode(index, (u.getNodeValue().length()+7)/8+1, null);
+            //belong.add(num);
+            return;
+        }
+
+        List<Integer> s = new LinkedList<>();
+        if (u.hasAttributes()) {
+            NamedNodeMap t = u.getAttributes();
+            for (int i = 0; i < t.getLength(); i++) {
+                num ++;
+                s.add(num);
+                List<Integer> ss = new LinkedList<>();
+                ss.add(num+1);
+                writeNode(num, 1, ss);
+                num ++;
+                writeNode(num, (t.item(i).getFirstChild().getNodeValue().length()+7)/8, null);
+            }
+        }
+
+        Node fc = u.getFirstChild();
+        int nn = 0;
+        while (fc != null) {
+            nn++;
+            s.add(num + nn);
+            fc = fc.getNextSibling();
+        }
+        writeNode(index, 1, s);
+
+        fc = u.getFirstChild();
+        int t = num;
+        num += nn;
+        while (fc != null) {
+            t ++;
+            NotPostdfsParseToFile(fc, t);
+            fc = fc.getNextSibling();
+        }
     }
 
     public static TreeNode getSigModRecord(InputStream inputSream) throws ParserConfigurationException, SAXException, IOException, IOException, SAXException {
@@ -114,12 +158,15 @@ public class TreeNodeParser {
         Document document = builder.parse(inputSream);
         NodeList nl = document.getChildNodes();
         List<Integer> s = new LinkedList<>();
-        num = 0;
+        num = 1;
+        for (int i = 0; i < nl.getLength(); i++)
+            s.add(i+1);
+        num += nl.getLength();
+        writeNode(1, 1, s);
+
         for (int i = 0; i < nl.getLength(); i++) {
-            dfsParseToFile(nl.item(i), s);
+            NotPostdfsParseToFile(nl.item(i), i+1);
         }
-        num++;
-        writeNode(num, 1, s);
     }
 
 }

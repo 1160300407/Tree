@@ -76,6 +76,7 @@ public class AlgoTest {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         String name1 = "C:\\Users\\29069\\Desktop\\data\\";
         String name = "D:\\XMLdata\\";
+        //name = "test.xml";
         //parseToFile(name);
        // inmemoryParse(name);
 
