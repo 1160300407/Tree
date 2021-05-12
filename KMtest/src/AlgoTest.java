@@ -5,7 +5,7 @@ import java.io.*;
 
 public class AlgoTest {
     public static TreeNode root;
-    public static int K = 352;
+    public static int K = 128;
     public AlgoTest(TreeNode r) {
         root = r;
     }
@@ -32,14 +32,14 @@ public class AlgoTest {
         out.write(new String("file:" + filename).getBytes());
         TreeNode r = TreeNodeParser.getSigModRecord(in);
         root = r;
-//
+
 //        Tree tree = new Tree(root);
 //        System.out.println("total nodes:" + TreeNode.total);
 //        out.write(new String(" total nodes:" + TreeNode.total).getBytes());
-
-      //  tree.postOrder();
-      //  System.out.println("size:"+root.totalWeight);
-      //  out.write(new String(" size:"+root.totalWeight).getBytes());
+//
+//        tree.postOrder();
+//        System.out.println("size:"+root.totalWeight);
+//        out.write(new String(" size:"+root.totalWeight).getBytes());
 
         int ans = calcKM();
         System.out.println(ans);
@@ -73,17 +73,38 @@ public class AlgoTest {
         out.close();
     }
 
+
+    public static void VaryKinmemoryParse(String filename,int num) throws IOException, SAXException, ParserConfigurationException {
+        InputStream in = new FileInputStream(filename);
+        FileOutputStream out = new FileOutputStream("VaryK.result",true);
+
+        System.out.println("opening "+filename);
+        out.write(String.valueOf(num).getBytes());
+        TreeNode.total = 0;
+        TreeNode r = TreeNodeParser.getSigModRecord(in);
+        root = r;
+        System.out.println("nodes:"+TreeNode.total);
+        while (K != 128 * 512 * 2) {//K = 128 1k,  ... K = 128 * 512, 512k
+            int ans = calcKM();
+            System.out.println("K="+K+" ,"+ans);
+            out.write(new String(" " + String.valueOf(ans)).getBytes());
+            K = K * 2;
+        }
+        out.write('\n');
+        out.close();
+        in.close();
+    }
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        String name1 = "C:\\Users\\29069\\Desktop\\data\\";
-        String name = "D:\\XMLdata\\";
+        String name = "C:\\Users\\29069\\Desktop\\data\\";
+        String name1 = "D:\\XMLdata\\";
         //name = "test.xml";
         //parseToFile(name);
-       // inmemoryParse(name);
+        VaryKinmemoryParse(name+"xf5.xml", 5);
 
-        for (int s = 2; s <= 10 ; s++) {
+        /*for (int s = 2; s <= 10 ; s++) {
             String filename = name + "x" + s + "g.xml";
             parseToFile(filename);
-        }
+        }*/
     }
 }
 /*
