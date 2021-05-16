@@ -5,7 +5,7 @@ import java.io.*;
 
 public class AlgoTest {
     public static TreeNode root;
-    public static int K = 128;
+    public static int K = 256/2;
     public AlgoTest(TreeNode r) {
         root = r;
     }
@@ -13,6 +13,12 @@ public class AlgoTest {
     public static int calcKM() {
         KM km = new KM(root, K);
         return km.getPartitionNumer();
+    }
+
+    public static int calcKMextra() {
+        //FileOutputStream out = new FileOutputStream(filename+".partition",false);
+        KM km = new KM(root, K);
+        return km.getPartExtra();
     }
 
     public static void parseToFile(String filename) throws IOException, SAXException, ParserConfigurationException {
@@ -26,10 +32,11 @@ public class AlgoTest {
 
     public static void inmemoryParse(String filename) throws IOException, SAXException, ParserConfigurationException {
         InputStream in = new FileInputStream(filename);
-        FileOutputStream out = new FileOutputStream(filename+"-xmark.result",true);
+        FileOutputStream out = new FileOutputStream("xmark.extraresult",true);
 
         System.out.println("opening "+filename);
         out.write(new String("file:" + filename).getBytes());
+        TreeNode.total = 0;
         TreeNode r = TreeNodeParser.getSigModRecord(in);
         root = r;
 
@@ -41,7 +48,7 @@ public class AlgoTest {
 //        System.out.println("size:"+root.totalWeight);
 //        out.write(new String(" size:"+root.totalWeight).getBytes());
 
-        int ans = calcKM();
+        int ans = calcKMextra();
         System.out.println(ans);
         out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
         out.write('\n');
@@ -76,7 +83,7 @@ public class AlgoTest {
 
     public static void VaryKinmemoryParse(String filename,int num) throws IOException, SAXException, ParserConfigurationException {
         InputStream in = new FileInputStream(filename);
-        FileOutputStream out = new FileOutputStream("VaryK.result",true);
+        FileOutputStream out = new FileOutputStream("VaryK.extraresult",true);
 
         System.out.println("opening "+filename);
         out.write(String.valueOf(num).getBytes());
@@ -85,7 +92,7 @@ public class AlgoTest {
         root = r;
         System.out.println("nodes:"+TreeNode.total);
         while (K != 128 * 512 * 2) {//K = 128 1k,  ... K = 128 * 512, 512k
-            int ans = calcKM();
+            int ans = calcKMextra();
             System.out.println("K="+K+" ,"+ans);
             out.write(new String(" " + String.valueOf(ans)).getBytes());
             K = K * 2;
@@ -94,16 +101,17 @@ public class AlgoTest {
         out.close();
         in.close();
     }
+
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         String name = "C:\\Users\\29069\\Desktop\\data\\";
         String name1 = "D:\\XMLdata\\";
         //name = "test.xml";
         //parseToFile(name);
         VaryKinmemoryParse(name+"xf5.xml", 5);
-
-        /*for (int s = 2; s <= 10 ; s++) {
-            String filename = name + "x" + s + "g.xml";
-            parseToFile(filename);
+        //inmemoryParse(name+"xf2.xml");
+        /*for (int s = 8; s <= 8 ; s++) {
+            String filename = name + "xf" + s + ".xml";
+            inmemoryParse(filename);
         }*/
     }
 }

@@ -6,6 +6,7 @@ public class TreeNode {
     static int total = 0;
     public int weight;
     public int totalWeight;
+    public int lvirtual = 0;
     public List<TreeNode> sons;
     public TreeNode(String name, int w) {
       //  label = name;
@@ -13,13 +14,6 @@ public class TreeNode {
         totalWeight = weight;
         total ++;
         if (total % 1000000 == 0) System.out.println(total+" nodes");
-    }
-
-    public TreeNode(String name, int w, int d) {
-        weight = w;
-        totalWeight = weight;
-        total ++;
-      //  index = total;
     }
 
     public TreeNode(String name) {
