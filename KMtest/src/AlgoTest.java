@@ -5,7 +5,7 @@ import java.io.*;
 
 public class AlgoTest {
     public static TreeNode root;
-    public static int K = 256/2;
+    public static int K = 256;
     public AlgoTest(TreeNode r) {
         root = r;
     }
@@ -32,7 +32,7 @@ public class AlgoTest {
 
     public static void inmemoryParse(String filename) throws IOException, SAXException, ParserConfigurationException {
         InputStream in = new FileInputStream(filename);
-        FileOutputStream out = new FileOutputStream("xmark.extraresult",true);
+        FileOutputStream out = new FileOutputStream("xmark-noW.result",true);
 
         System.out.println("opening "+filename);
         out.write(new String("file:" + filename).getBytes());
@@ -48,7 +48,7 @@ public class AlgoTest {
 //        System.out.println("size:"+root.totalWeight);
 //        out.write(new String(" size:"+root.totalWeight).getBytes());
 
-        int ans = calcKMextra();
+        int ans = calcKM();
         System.out.println(ans);
         out.write(new String(" ans:"+String.valueOf(ans)).getBytes());
         out.write('\n');
@@ -107,12 +107,12 @@ public class AlgoTest {
         String name1 = "D:\\XMLdata\\";
         //name = "test.xml";
         //parseToFile(name);
-        VaryKinmemoryParse(name+"xf5.xml", 5);
+        //VaryKinmemoryParse(name+"xf5.xml", 5);
         //inmemoryParse(name+"xf2.xml");
-        /*for (int s = 8; s <= 8 ; s++) {
+        for (int s = 9; s >= 6 ; s--) {
             String filename = name + "xf" + s + ".xml";
             inmemoryParse(filename);
-        }*/
+        }
     }
 }
 /*

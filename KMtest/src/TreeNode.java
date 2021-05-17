@@ -16,13 +16,22 @@ public class TreeNode {
         if (total % 1000000 == 0) System.out.println(total+" nodes");
     }
 
-    public TreeNode(String name) {
+    /*public TreeNode(String name) {
       //  label = name;
         weight = (name.getBytes().length+7)/8 + 1; // another slots for metadata.
         totalWeight = weight;
         total ++;
         if (total % 1000000 == 0) System.out.println(total+" nodes");
+    }*/
+    //no weight!!
+    public TreeNode(String name) {
+        //  label = name;
+        weight = 1; // another slots for metadata.
+        totalWeight = weight;
+        total ++;
+        if (total % 1000000 == 0) System.out.println(total+" nodes");
     }
+
 
     public void addSon(TreeNode... t) {
         if (sons == null) {
