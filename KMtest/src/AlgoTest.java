@@ -109,7 +109,7 @@ public class AlgoTest {
         //parseToFile(name);
         //VaryKinmemoryParse(name+"xf5.xml", 5);
         //inmemoryParse(name+"xf2.xml");
-        for (int s = 9; s >= 6 ; s--) {
+        for (int s = 6; s >= 6 ; s--) {
             String filename = name + "xf" + s + ".xml";
             inmemoryParse(filename);
         }
